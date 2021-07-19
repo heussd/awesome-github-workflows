@@ -36,4 +36,6 @@ jobs:
         run: |
           docker buildx build --push \
             --tag "${{ github.repository }}":latest \
+            --label "org.opencontainers.image.source=https://github.com/${{ github.repository }}" \
+            --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
             --platform  linux/amd64,linux/arm64,linux/arm/v7 .
