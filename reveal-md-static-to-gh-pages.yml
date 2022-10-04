@@ -1,0 +1,22 @@
+name: Deploy to GitHub Pages
+on: [push]
+
+
+jobs:
+  deploy-to-gh-pages:
+    name: Checkout and Deploy
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Generate
+        run: |
+          docker run --rm -v ${PWD}/:/slides webpronl/reveal-md:latest readme.md --static _site
+      -
+        name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: _site
